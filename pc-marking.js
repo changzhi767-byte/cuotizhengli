@@ -8,7 +8,6 @@ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),group=b=>b.group||b.id;
 const tools=document.createElement('div');tools.className='editor-tools';tools.hidden=true;tools.innerHTML='<button class="btn" data-action="merge">合并</button><button class="btn" data-action="split">拆开</button><button class="btn" data-action="delete">删除</button><button class="btn" data-action="undo" title="Ctrl / ⌘ Z">撤销</button><button class="btn" data-action="redo" title="Ctrl / ⌘ Shift Z">重做</button><button class="btn" data-action="cancel">取消</button><button class="btn btn-primary" data-action="done">完成编辑</button>';
 document.querySelector('.canvas-shell').append(tools);
 const hint=document.createElement('div');hint.className='canvas-hint';hint.hidden=true;document.querySelector('.canvas-shell').append(hint);
-const foot=document.createElement('div');foot.className='panel-footer';foot.textContent='标记与题框实时关联 · 同题多个标记计 1 题';document.querySelector('.panel').append(foot);
 const dialog=document.createElement('dialog');dialog.className='pc-dialog';dialog.innerHTML='<h3></h3><p></p><footer><button class="btn btn-primary" data-close>知道了</button></footer>';document.body.append(dialog);
 dialog.querySelector('[data-close]').onclick=()=>dialog.close();
 function notify(message){document.querySelector('.toast-message')?.remove();const n=document.createElement('div');n.className='toast-message';n.setAttribute('role','status');n.textContent=message;document.body.append(n);clearTimeout(toastTimer);toastTimer=setTimeout(()=>n.remove(),3200)}

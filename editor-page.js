@@ -1,0 +1,17 @@
+/* Figma 10254:12730 editing page, sharing the original-coordinate editor transaction. */
+let addBoxMode=false;
+const gradeSubject=document.createElement('button');gradeSubject.className='editor-grade';gradeSubject.hidden=true;gradeSubject.setAttribute('aria-label','年级与学科');gradeSubject.innerHTML='<span></span><img src="edit-chevron.svg" alt="">';document.querySelector('.student').after(gradeSubject);
+const editorActions=document.createElement('div');editorActions.className='editor-page-actions';editorActions.hidden=true;editorActions.innerHTML='<button type="button" class="editor-add" aria-pressed="false"><img src="edit-add.svg" alt="">添加框</button><i class="editor-divider" aria-hidden="true"></i><button type="button" class="btn btn-primary editor-confirm">确定</button>';document.querySelector('.toolbar').append(editorActions);
+const fieldDialog=document.createElement('dialog');fieldDialog.className='pc-dialog editor-fields';fieldDialog.innerHTML='<h3>年级 / 学科</h3><form><label>年级<select name="grade" aria-label="年级"></select></label><label>学科<select name="subject" aria-label="学科"></select></label><footer><button type="button" class="btn" data-field-cancel>取消</button><button type="submit" class="btn btn-primary">确定</button></footer></form>';document.body.append(fieldDialog);
+const grades=['1年级','2年级','3年级','4年级','5年级','6年级','7年级','8年级','9年级','高一','高二','高三'];const subjects=['数学','语文','英语','物理','化学','生物','历史','地理','政治'];
+for(const [name,values] of [['grade',grades],['subject',subjects]])fieldDialog.querySelector(`[name=${name}]`).replaceChildren(...values.map(value=>{const o=document.createElement('option');o.value=o.textContent=value;return o}));
+gradeSubject.onclick=()=>{fieldDialog.querySelector('[name=grade]').value=editorFields.grade;fieldDialog.querySelector('[name=subject]').value=editorFields.subject;fieldDialog.showModal()};
+fieldDialog.querySelector('[data-field-cancel]').onclick=()=>fieldDialog.close();fieldDialog.querySelector('form').onsubmit=e=>{e.preventDefault();const value={grade:fieldDialog.querySelector('[name=grade]').value,subject:fieldDialog.querySelector('[name=subject]').value};if(JSON.stringify(value)!==JSON.stringify(editorFields)){remember();editorFields=value}fieldDialog.close();syncEditorPage();draw()};
+function syncEditorPage(){const on=tool==='edit';gradeSubject.hidden=!on;editorActions.hidden=!on;gradeSubject.querySelector('span').textContent=editorFields.grade+'/'+editorFields.subject;tools.hidden=!on||!editIds.size;document.body.classList.toggle('adding-box',on&&addBoxMode);editorActions.querySelector('.editor-add').setAttribute('aria-pressed',String(addBoxMode));$('back').setAttribute('aria-label',on?'取消编辑并返回':'返回适应整页')}
+editorActions.querySelector('.editor-add').onclick=()=>{addBoxMode=!addBoxMode;editIds.clear();syncEditorPage();draw();if(addBoxMode)notify('在原图上拖动，添加一个题框')};editorActions.querySelector('.editor-confirm').onclick=()=>finishEdit(true);
+const previousSetTool=setTool;setTool=function(next){const oldAnchor=anchor();addBoxMode=false;previousSetTool(next);syncEditorPage();render(oldAnchor)};
+const previousDraw=draw;draw=function(){previousDraw();syncEditorPage()};
+$('back').onclick=()=>{if(tool==='edit')finishEdit(false);else{fit=true;render()}};
+// Dialog input must not reach canvas shortcuts, including Space, Delete and history keys.
+fieldDialog.addEventListener('keydown',e=>e.stopPropagation());
+syncEditorPage();

@@ -1,0 +1,117 @@
+[hidden]{display:none!important}body{min-width:0}.student{white-space:nowrap}.panel,body.editing .panel{display:flex;width:250px;flex:none;overflow:hidden}.canvas-shell > .mode{border-radius:8px;padding:2px}.canvas-shell > .mode .btn{font-size:13px;padding:6px 10px;border-radius:6px;background:transparent;color:var(--t2)}.canvas-shell > .mode .btn[aria-pressed=true]{background:#e5eeff;color:var(--primary)}.paper .box{pointer-events:none}.editing .box{pointer-events:auto;cursor:move}.box,.box.selected,.box.owner,.box.edit-selected{border:1px dashed #b0b5cd;border-radius:2px;background:transparent;box-shadow:none}.box.selected,.box.owner,.box.edit-selected{border-color:#71778f;border-style:solid}.box.muted{opacity:1}.box span{left:-14px;top:.43px;height:15px;line-height:14px;padding:0 4px;border-radius:3px 0 0 3px;background:#b0b5cd;color:#fff;font-size:10px;font-weight:400}.box.selected span,.box.owner span,.box.edit-selected span{background:#5e637a}.handle{position:absolute;width:10px;height:10px;background:white;border:1px solid #71778f;border-radius:50%;padding:0;z-index:5}.handle[data-h=nw]{left:-5px;top:-5px;cursor:nwse-resize}.handle[data-h=ne]{right:-5px;top:-5px;cursor:nesw-resize}.handle[data-h=sw]{left:-5px;bottom:-5px;cursor:nesw-resize}.handle[data-h=se]{right:-5px;bottom:-5px;cursor:nwse-resize}.handle[data-h=n]{left:50%;top:-5px;cursor:ns-resize}.handle[data-h=s]{left:50%;bottom:-5px;cursor:ns-resize}.handle[data-h=e]{right:-5px;top:50%;cursor:ew-resize}.handle[data-h=w]{left:-5px;top:50%;cursor:ew-resize}.error-mark{position:absolute;transform:translate(-50%,-50%);padding:0;border:1px solid transparent;background:transparent;aspect-ratio:1;cursor:move;z-index:6;touch-action:none}.error-mark .ink,.crop-mark{position:absolute;inset:0;background:url('error-ink.svg') center/100% 100% no-repeat;pointer-events:none;mix-blend-mode:multiply}.error-mark.active{border:1px solid #71778f}.error-mark.muted{opacity:.1}.error-mark.locked{pointer-events:none}.error-mark .handle{border-radius:2px}.mark-delete{position:absolute;left:-14px;top:-14px;width:24px;height:24px;border:1px solid #ddd;border-radius:50%;background:white;box-shadow:0 2px 6px #0002;font-size:16px;cursor:pointer;line-height:20px}.editor-tools{position:absolute;z-index:10;top:16px;left:calc(50% + 60px);transform:translateX(-50%);display:flex;gap:5px;padding:8px;background:white;border:1px solid var(--line);border-radius:12px;box-shadow:0 4px 20px #0001;white-space:nowrap}.editor-tools button{font-size:12px;padding:5px 10px}.canvas-hint{position:absolute;bottom:72px;left:calc(50% + 60px);transform:translateX(-50%);padding:7px 12px;background:#ffffffeb;color:var(--t3);font-size:11px;border-radius:8px;pointer-events:none;white-space:nowrap}.panel h2{display:flex;gap:4px;align-items:center}.panel .list{scroll-behavior:smooth;overflow-anchor:none}.item{padding:10px;background:white;flex:none;position:relative;outline:none}.item.active{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary)}.item strong{font-size:12px;margin:0 24px 8px 0}.item .remove-card{position:absolute;right:6px;top:5px;border:0;background:transparent;color:var(--t3);cursor:pointer;font-size:18px}.crop{position:relative;overflow:hidden;width:100%;margin:6px 0;background:white;min-height:32px}.crop img{position:absolute;max-width:none;pointer-events:none}.crop-mark{inset:auto;transform:translate(-50%,-50%)}.item small{font-size:11px;line-height:1.5}.toast-message{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:100;background:#2f3448;color:white;border-radius:10px;padding:12px 20px;box-shadow:0 6px 24px #0002;max-width:70vw}.pc-dialog{border:0;border-radius:16px;padding:24px;width:420px;box-shadow:0 20px 80px #0003;color:var(--t1);margin:auto}.pc-dialog::backdrop{background:#1c1f2e50}.pc-dialog h3{margin:0 0 12px}.pc-dialog p{line-height:1.8;font-size:14px;white-space:pre-line}.pc-dialog footer{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.browsing .overlay{cursor:grab}.marking .overlay{cursor:crosshair}.space-pan .overlay{cursor:grab!important}.panel-footer{padding:12px;margin:0;font-size:11px;line-height:1.5}.empty small{white-space:normal}.floating-zoom,.demo-controls{z-index:12}button:disabled{cursor:default}
+
+/* Figma 10130:118565: navigation action bar and source-frame states. */
+.toolbar > #editMode,.toolbar > #save{flex:none;height:36px;padding:7.5px 16px;border:.5px solid;border-radius:9999px;font-size:15px;font-weight:400;line-height:21px;display:inline-flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap;box-shadow:none}
+.toolbar > #editMode,.toolbar > #editMode[aria-pressed=true]{background:#e5eeff;border-color:#e5eeff;color:#0054fd}
+.toolbar > #save{background:#0054fd;border-color:#0054fd;color:#fff}
+.toolbar > #save:disabled{background:#99bbfe;border-color:#99bbfe;color:#e5eeff;opacity:1}
+.canvas-shell > .mode{position:absolute;left:176px;top:16px;z-index:11;display:flex;gap:4px;padding:4px;border:.5px solid var(--line);background:#ffffffe6;box-shadow:0 2px 10px #0001;border-radius:9999px}
+.editor-tools{top:auto;bottom:112px}
+
+/* Figma 10130:119357 / 119360: right-side question card. */
+.panel .list{padding:8px 12px;gap:8px}
+.panel .item{padding:0 12px 12px;border:0;border-radius:10px;background:rgba(0,0,0,.05);color:var(--t1);box-shadow:none}
+.panel .item.active,.panel .item:hover{border:0;box-shadow:none}
+.panel .item:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.card-heading{height:30px;display:flex;align-items:center;justify-content:space-between;flex:none}
+.card-number{display:flex;align-items:center;justify-content:center;width:20px;height:14px;border:1px solid #f7f9fc;border-radius:9999px;background:rgba(0,0,0,.4);color:#fff;font-size:10px;line-height:14px;font-weight:400}
+.panel .item .remove-card{position:relative;inset:auto;display:flex;align-items:center;justify-content:center;width:16px;height:16px;padding:0;border:0;background:transparent;border-radius:0;cursor:pointer}
+.remove-card::after{content:'';position:absolute;inset:-4px}
+.remove-card img{display:block;width:16px;height:16px}
+.crop-group{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:1px;border:1px solid rgba(0,0,0,.16);border-radius:3px;background:#fff;overflow:hidden}
+.crop-group .crop{flex:none;min-height:32px;margin:0;border:0;background:#fff}
+
+/* Original mobile Demo: selected error mark and independent control visuals. */
+.error-mark.active{border:1px dashed #0054fd;border-radius:0;z-index:7}
+.error-mark .handle{width:6px;height:6px;border:1px solid #0054fd;border-radius:0;background:#fff;box-shadow:0 1px 3px rgba(6,18,56,.3);transform:translate(-50%,-50%);z-index:9}
+.error-mark .handle::after{content:'';position:absolute;inset:-7px}
+.error-mark .handle[data-h=ne]{left:100%;top:0;right:auto;bottom:auto}
+.error-mark .handle[data-h=sw]{left:0;top:100%;right:auto;bottom:auto}
+.error-mark .handle[data-h=se]{left:100%;top:100%;right:auto;bottom:auto}
+.error-mark .mark-delete{position:absolute;left:0;top:0;transform:translate(-50%,-50%);width:24px;height:24px;padding:0;border:0;border-radius:50%;background:transparent;box-shadow:none;display:grid;place-items:center;z-index:10}
+
+/* Preserve the source Demo's 500px art/mask geometry, separate from hit bounds. */
+.crop-mark{background:none;mix-blend-mode:multiply}
+.mark-art{position:absolute;left:-1px;top:-1px;width:500px;height:500px;transform:scale(var(--mark-art-scale));transform-origin:left top;pointer-events:none;mix-blend-mode:multiply}
+.mark-ink{position:absolute;left:82.971px;top:84.856px;width:377.526px;height:339.657px;mask:url('error-mask.svg') -82.971px -84.856px/500px 500px no-repeat;-webkit-mask:url('error-mask.svg') -82.971px -84.856px/500px 500px no-repeat}
+.paper .mark-ink > img,.mark-ink > img{display:block;width:377.526px;height:339.657px;max-width:none;max-height:none;pointer-events:none}
+
+/* Figma 10254:12730 full-canvas question-box editor. */
+body.editing .panel{display:none}
+body.editing .toolbar > #editMode,body.editing .toolbar > #save{display:none}
+body.editing .student{margin-right:0}
+.editor-grade{height:32px;width:150px;display:flex;align-items:center;gap:8px;padding:0 16px;border:1px solid #ccd2ea;border-radius:10px;background:white;box-shadow:0 0 4px #0000000d;color:#1c1f2e;font:inherit;font-size:15px;cursor:pointer;white-space:nowrap}
+.editor-grade span{flex:1;text-align:left;overflow:hidden;text-overflow:ellipsis}.editor-grade img{display:block;width:16px;height:16px;flex:none}
+.editor-page-actions{margin-left:auto;height:100%;display:flex;align-items:center;gap:16px}
+.editor-add{height:28px;display:flex;align-items:center;gap:4px;padding:0 8px;border:.5px solid #c9cdd4;border-radius:9999px;background:#f7f8fa;color:#1c1f2e;font:inherit;font-size:13px;line-height:18.2px;cursor:pointer}
+.editor-add img{width:16px;height:16px;display:block}.editor-add[aria-pressed=true]{background:#e5eeff;border-color:#0054fd;color:#0054fd}
+.editor-divider{height:28px;width:.5px;background:#ccd2ea}
+.toolbar .editor-confirm{height:36px;padding:7.5px 16px;border:.5px solid #0054fd;border-radius:9999px;background:#0054fd;color:white;font-size:15px;line-height:21px;box-shadow:none}
+body.editing .error-mark{visibility:hidden;pointer-events:none}
+body.editing .box{border:1px dashed #b0b5cd;background:transparent;box-shadow:none}
+body.editing .box span{background:#b0b5cd}
+body.editing .box.edit-selected{border:1px solid #71778f}
+body.editing .box.edit-selected span{background:#5e637a}
+body.editing .editor-tools [data-action=cancel],body.editing .editor-tools [data-action=done]{display:none}
+body.editing .editor-tools{bottom:24px;left:50%}
+body.editing .canvas-hint{display:none}
+body.editing .overlay{cursor:default}.editing.adding-box .overlay{cursor:crosshair}
+.editor-fields label{display:flex;align-items:center;gap:12px;margin:16px 0}.editor-fields select{flex:1;font-size:15px}
+body.editing .demo-controls{display:none}
+
+/* Shortcut reference, styled after the user's white keycap popover example. */
+.keyboard-help{position:absolute;right:20px;bottom:20px;z-index:30;font-family:inherit}
+.keyboard-help-trigger{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:0;border-radius:50%;background:rgba(28,31,46,.45);color:white;cursor:pointer;box-shadow:0 2px 8px #00000012}
+.keyboard-help-trigger span{font-family:Georgia,serif;font-size:22px;font-weight:700;line-height:1}
+.keyboard-help-trigger:hover,.keyboard-help-trigger[aria-expanded=true]{background:rgba(28,31,46,.65)}
+.keyboard-help-card{position:absolute;right:-8px;bottom:54px;width:360px;padding:20px;border:1px solid #ffffffb3;border-radius:20px;background:rgba(255,255,255,.97);box-shadow:0 8px 32px rgba(28,31,46,.14);backdrop-filter:blur(12px);color:#1c1f2e}
+.keyboard-help-card::after{content:'';position:absolute;right:17px;bottom:-9px;width:18px;height:18px;background:#fff;transform:rotate(45deg);border-radius:0 0 3px 0}
+.keyboard-help-card h3{font-size:18px;font-weight:600;line-height:25px;margin:0 0 18px}
+.keyboard-help-row{display:grid;grid-template-columns:106px minmax(0,1fr);gap:14px;align-items:start;margin-top:18px}
+.keyboard-help-row kbd{height:32px;display:flex;align-items:center;justify-content:center;padding:0 8px;border:1px solid #ccd2ea;border-radius:8px;background:#f7f8fc;box-shadow:0 2px 0 #1c1f2e0b;color:#24252b;font:600 13px/20px -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;white-space:nowrap}
+.keyboard-help-row strong{display:block;font-size:15px;font-weight:600;line-height:22px;margin:0 0 3px}
+.keyboard-help-row p{font-size:14px;line-height:22px;color:#717278;margin:0}
+.keyboard-help .edit-only{display:none}body.editing .keyboard-help .mark-only{display:none}body.editing .keyboard-help .edit-only{display:inline}
+@media(max-height:600px){.keyboard-help-card{padding:16px}.keyboard-help-row{margin-top:12px}}
+
+.toast-message.mark-cleanup-toast{top:50%;bottom:auto;left:50%;transform:translate(-50%,-50%)}
+
+/* Current question focus is independent of whether it has error marks. */
+.paper .box.selected,.paper .box.owner,body.editing .box.edit-selected{border:1px solid #1c1f2e}
+.panel .item{transition:background-color .16s ease,box-shadow .16s ease;cursor:pointer}
+.panel .item:hover,.panel .item:focus-visible{background:#e9ebf2;box-shadow:0 3px 12px rgba(28,31,46,.1)}
+@media(prefers-reduced-motion:reduce){.panel .item{transition:none}}
+
+/* Canvas-wide clear action uses the Figma trash pill beside the zoom group. */
+.canvas-actions{position:absolute;right:20px;top:20px;display:flex;align-items:center;gap:8px;z-index:12}
+.canvas-actions .floating-zoom{position:static}
+.floating-clear{display:flex;padding:4px;border:.5px solid var(--line);border-radius:9999px;background:#ffffffe6;box-shadow:0 4px 24px #0003;backdrop-filter:blur(12px)}
+.floating-clear button{height:28px;display:grid;place-items:center;padding:0 8px;border:0;border-radius:9999px;background:transparent;cursor:pointer}
+.floating-clear button:hover{background:var(--bg)}.floating-clear button:disabled{opacity:.35;cursor:default}.floating-clear img{width:20px;height:20px}
+body.editing .floating-clear{display:none}
+/* Selected mark actions sit below its lower-right corner; no corner close badge. */
+.error-mark .mark-delete{left:auto;right:-1px;top:calc(100% + 8px);transform:none;width:44px;height:36px;border:.5px solid #ccd2ea;border-radius:10px;background:#fff;box-shadow:0 4px 16px #1c1f2e26;display:grid;place-items:center}
+.error-mark .mark-delete::before{content:none}
+.error-mark .mark-delete img{display:block;width:20px;height:20px;filter:grayscale(1);opacity:.65;pointer-events:none}
+.error-mark .mark-delete:hover{background:#f7f9fc}.error-mark .mark-delete:focus-visible{outline:2px solid #0054fd;outline-offset:2px}
+
+.error-mark .handle[data-h=nw]{left:0;top:0;right:auto;bottom:auto}
+.mark-marquee,.batch-selection{position:absolute;z-index:9;border:1px dashed #0054fd;background:#0054fd08;touch-action:none}.mark-marquee{pointer-events:none}.batch-selection{cursor:move;background:transparent}.batch-selection .handle{width:6px;height:6px;border-radius:0;border-color:#0054fd;transform:translate(-50%,-50%)}.batch-selection .handle::after{content:'';position:absolute;inset:-7px}.batch-selection .handle[data-h=nw]{left:0;top:0}.batch-selection .handle[data-h=ne]{left:100%;top:0}.batch-selection .handle[data-h=sw]{left:0;top:100%}.batch-selection .handle[data-h=se]{left:100%;top:100%}.batch-actions{position:absolute;right:0;top:calc(100% + 8px);display:flex;align-items:center;gap:12px;background:white;border:1px solid #ccd2ea;border-radius:10px;padding:6px 10px;box-shadow:0 4px 16px #1c1f2e26;white-space:nowrap;font-size:12px;cursor:default}.batch-actions button{border:0;background:transparent;cursor:pointer;padding:2px;display:grid;place-items:center}.batch-actions img{width:20px;height:20px}.demo-controls{display:none!important}
+
+.keyboard-help-card{max-height:calc(100vh - 140px);overflow-y:auto}
+
+/* Bound the application to the actual CSS viewport, including browser zoom/sidebar. */
+html,body{width:100%;max-width:100%;min-width:0;margin:0;overflow:hidden}
+body{height:100dvh}.workspace{width:100%;max-width:100%;min-width:0;height:calc(100dvh - 56px);overflow:hidden}
+.canvas-shell{min-width:0;overflow:hidden}.panel{min-width:0;max-width:100%;height:100%;min-height:0}.panel .list{min-width:0;min-height:0;width:100%;overflow-x:hidden;overflow-y:auto}.panel .item,.crop-group{min-width:0;max-width:100%}.panel-footer{flex:none}
+.toolbar{width:100%;max-width:100%;min-width:0}.student{min-width:0;overflow:hidden;text-overflow:ellipsis}.toolbar>.btn,.toolbar>.nav-icon{flex-shrink:0}
+@media(max-width:900px){.panel,body.editing .panel{width:220px}.thumbnails{width:112px}#thumbnailList{padding:16px 12px}.thumbnail,.thumbnail-preview,.thumbnail img{width:88px}.canvas-actions{right:12px;top:12px}}
+@media(max-width:700px){.panel,body.editing .panel{width:180px}.thumbnails{width:88px}#thumbnailList{padding:12px 8px;gap:12px}.thumbnail,.thumbnail-preview,.thumbnail img{width:72px}.toolbar{padding:0 8px;gap:4px}.toolbar .btn{padding:7px 10px}.panel .list{padding:8px}.panel .item{padding:0 8px 8px}.panel-footer{padding:8px;font-size:10px}}
+@media(max-width:500px){.panel,body.editing .panel{width:144px}.thumbnails{width:64px}.thumbnail,.thumbnail-preview,.thumbnail img{width:48px}.student{font-size:14px}.toolbar .btn{font-size:12px;padding:7px 8px}.toolbar #menu{display:none}.panel h2{font-size:12px}}
+
+/* Figma 10472:7179: pale error fill inside the white deletion shell. */
+.error-mark .mark-delete::before{content:none}
+.error-mark .mark-delete:hover,.error-mark .mark-delete:focus-visible{background:#ffece8}
+
+.error-mark .mark-delete img{position:relative;z-index:1}
+.error-mark .mark-delete:hover img,.error-mark .mark-delete:focus-visible img{filter:none;opacity:1}

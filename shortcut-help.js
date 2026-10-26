@@ -6,7 +6,6 @@ const keyboardHelp=document.createElement('aside');keyboardHelp.className='keybo
 <div class="keyboard-help-row"><kbd>Shift + 滚轮</kbd><div><strong>缩放试卷</strong><p>按住 Shift 滚动，以鼠标位置缩放试卷。</p></div></div>
 <div class="keyboard-help-row mark-only"><kbd>↑ ↓ ← →</kbd><div><strong>移动标记</strong><p>选中标记后，可通过键盘上、下、左、右方向键移动。</p></div></div>
 <div class="keyboard-help-row mark-only"><kbd>Shift + 方向键</kbd><div><strong>快速移动标记</strong><p>选中标记后，按 Shift + 方向键，每次移动 10 像素。</p></div></div>
-<div class="keyboard-help-row"><kbd>Ctrl/⌘ + Z</kbd><div><strong>撤回上一步操作</strong><p>撤回到上一步操作，恢复修改前的状态。</p></div></div>
 <div class="keyboard-help-row"><kbd>Delete</kbd><div><strong>删除<span class="mark-only">标记</span><span class="edit-only">题框</span></strong><p><span class="mark-only">选中标记后，按 Delete 删除当前标记。</span><span class="edit-only">选中题框后，按 Delete 删除当前题框。</span></p></div></div>
 </section>
 <button class="keyboard-help-trigger" type="button" aria-label="快捷操作提示" aria-controls="keyboardHelpCard" aria-expanded="false"><span aria-hidden="true">i</span></button>`;

@@ -119,6 +119,11 @@ body{height:100dvh}.workspace{width:100%;max-width:100%;min-width:0;height:calc(
 /* Figma 10489:8573: shared btn controls with scoped dialog sizing. */
 .clear-marks-dialog footer .btn{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;flex:none;height:32px;min-height:32px;max-height:32px;min-width:32px;padding:0 16px;border:0;border-radius:9999px;font-family:"PingFang SC",sans-serif;font-size:14px;font-weight:400;line-height:18px;letter-spacing:0;white-space:nowrap;box-shadow:none}
 .clear-marks-dialog footer .btn[data-cancel]{width:60px;background:#f7f9fc;color:var(--t1,#1c1f2e);border:.5px solid #ccd2ea}
-.clear-marks-dialog [data-confirm]{width:88px;background:#f5222d;color:#fff}
-.clear-marks-dialog [data-confirm]:hover{background:#ff4d4f;color:#fff;box-shadow:none}
-.clear-marks-dialog [data-confirm]:active{background:#cf1322;color:#fff}
+.clear-marks-dialog [data-confirm]{width:88px;background:#f53f3f;color:#fff}
+.clear-marks-dialog [data-confirm]:hover{background:#cb2634;color:#fff;box-shadow:none}
+.clear-marks-dialog [data-confirm]:active{background:#cb2634;color:#fff;box-shadow:0 0 0 2px #fdcdc5}
+
+/* Source component variants: inverse secondary 61242/44/46; danger primary 61709/10/11. */
+.clear-marks-dialog footer .btn{transition:none}
+.clear-marks-dialog footer .btn[data-cancel]:hover{background:#f7f9fc;border-color:#1c1f2e;color:#1c1f2e;box-shadow:none}
+.clear-marks-dialog footer .btn[data-cancel]:active{background:rgba(0,0,0,.1);border-color:#1c1f2e;color:#1c1f2e;box-shadow:none}

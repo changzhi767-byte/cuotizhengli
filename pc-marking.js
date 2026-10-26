@@ -101,7 +101,7 @@ window.addEventListener('pointercancel',()=>{outsideMarkTap=null});
 window.addEventListener('blur',()=>{outsideMarkTap=null});
 
 // Whole-paper reset remains separate from deleting an individual selected mark.
-const clearMarksDialog=document.createElement('dialog');clearMarksDialog.className='pc-dialog clear-marks-dialog';clearMarksDialog.setAttribute('aria-labelledby','clearMarksTitle');clearMarksDialog.setAttribute('aria-describedby','clearMarksDescription');clearMarksDialog.innerHTML='<h3 id="clearMarksTitle">是否清除所有标记？</h3><p id="clearMarksDescription">将清除当前试卷所有页面上的标记，题框保留。</p><footer><button type="button" class="btn" data-cancel autofocus>取消</button><button type="button" class="btn btn-primary" data-confirm>确认清除</button></footer>';document.body.append(clearMarksDialog);
+const clearMarksDialog=document.createElement('dialog');clearMarksDialog.className='pc-dialog clear-marks-dialog';clearMarksDialog.setAttribute('aria-labelledby','clearMarksTitle');clearMarksDialog.setAttribute('aria-describedby','clearMarksDescription');clearMarksDialog.innerHTML='<h3 id="clearMarksTitle">是否清除所有标记？</h3><p id="clearMarksDescription">将清除当前试卷所有页面上的标记，题框保留。</p><footer><button type="button" class="btn" data-cancel autofocus>取消</button><button type="button" class="btn btn-danger" data-confirm>确认清除</button></footer>';document.body.append(clearMarksDialog);
 function requestClearAllMarks(){if(tool!=='mark'||!marks.length)return;clearMarksDialog.showModal()}
 $('clearAllMarks').onclick=requestClearAllMarks;
 clearMarksDialog.querySelector('[data-cancel]').onclick=()=>clearMarksDialog.close();

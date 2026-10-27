@@ -77,7 +77,7 @@ body.editing .demo-controls{display:none}
 .toast-message.mark-cleanup-toast{top:50%;bottom:auto;left:50%;transform:translate(-50%,-50%)}
 
 /* Current question focus is independent of whether it has error marks. */
-.paper .box.selected,.paper .box.owner,body.editing .box.edit-selected{border:1px solid #1c1f2e}
+.paper .box.selected,.paper .box.owner,body.editing .box.edit-selected{border:2px solid #1c1f2e}
 .panel .item{transition:background-color .16s ease,box-shadow .16s ease;cursor:pointer}
 .panel .item:hover,.panel .item:focus-visible{background:#e9ebf2;box-shadow:0 3px 12px rgba(28,31,46,.1)}
 @media(prefers-reduced-motion:reduce){.panel .item{transition:none}}

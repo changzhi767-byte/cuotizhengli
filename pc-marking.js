@@ -117,3 +117,12 @@ function transformMarkGroup(g,e){const dx=e.clientX-g.cx+viewport.scrollLeft-g.s
 function patchMarkup(parent,html){const template=document.createElement('template');template.innerHTML=html;syncChildren(parent,template.content)}
 function renderKey(node){if(node.nodeType!==1)return null;for(const attr of ['data-mark','data-id','data-jump','data-crop','data-crop-mark','data-h','data-delete-mark','data-remove-group'])if(node.hasAttribute(attr))return node.tagName+':'+attr+':'+node.getAttribute(attr);return null}
 function syncChildren(parent,next){const old=[...parent.childNodes],keyed=new Map(old.map(n=>[renderKey(n),n]).filter(([k])=>k)),used=new Set();let cursor=parent.firstChild;for(const fresh of [...next.childNodes]){const key=renderKey(fresh);let current=key?keyed.get(key):old.find(n=>!used.has(n)&&!renderKey(n)&&n.nodeType===fresh.nodeType&&(n.nodeType!==1||n.tagName===fresh.tagName));if(!current||current.nodeType!==fresh.nodeType||(current.nodeType===1&&current.tagName!==fresh.tagName))current=fresh.cloneNode(true);else if(current.nodeType===1){for(const attr of [...current.attributes])if(!fresh.hasAttribute(attr.name))current.removeAttribute(attr.name);for(const attr of [...fresh.attributes])if(current.getAttribute(attr.name)!==attr.value)current.setAttribute(attr.name,attr.value);if(!fresh.hasAttribute('data-crop'))syncChildren(current,fresh)}else if(current.nodeValue!==fresh.nodeValue)current.nodeValue=fresh.nodeValue;used.add(current);if(current!==cursor)parent.insertBefore(current,cursor);cursor=current.nextSibling}for(const node of old)if(!used.has(node))node.remove()}
+
+// Do not show the thumbnail scrollbar for hover alone.
+const thumbnailScroller=$('thumbnailList');
+let thumbnailScrollbarTimer;
+thumbnailScroller.addEventListener('scroll',()=>{
+ thumbnailScroller.classList.add('is-scrolling');
+ clearTimeout(thumbnailScrollbarTimer);
+ thumbnailScrollbarTimer=setTimeout(()=>thumbnailScroller.classList.remove('is-scrolling'),800);
+},{passive:true});

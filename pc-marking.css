@@ -127,3 +127,11 @@ body{height:100dvh}.workspace{width:100%;max-width:100%;min-width:0;height:calc(
 .clear-marks-dialog footer .btn{transition:none}
 .clear-marks-dialog footer .btn[data-cancel]:hover{background:#f7f9fc;border-color:#1c1f2e;color:#1c1f2e;box-shadow:none}
 .clear-marks-dialog footer .btn[data-cancel]:active{background:rgba(0,0,0,.1);border-color:#1c1f2e;color:#1c1f2e;box-shadow:none}
+
+/* Keep the gutter stable; reveal the thumb only while thumbnails scroll. */
+#thumbnailList{scrollbar-color:transparent transparent;transition:scrollbar-color .2s ease}
+#thumbnailList.is-scrolling{scrollbar-color:rgba(113,119,143,.55) transparent}
+#thumbnailList::-webkit-scrollbar{width:6px;height:6px}
+#thumbnailList::-webkit-scrollbar-track{background:transparent}
+#thumbnailList::-webkit-scrollbar-thumb{background:transparent;border-radius:3px}
+#thumbnailList.is-scrolling::-webkit-scrollbar-thumb{background:rgba(113,119,143,.55)}

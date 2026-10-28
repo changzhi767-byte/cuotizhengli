@@ -208,3 +208,9 @@ body.marking .paper .box:not(.selected):not(.owner):not(.is-hovered){border:1px 
 body.marking .thumbnail-box::before{display:none}
 
 .panel .card-heading{justify-content:flex-end}
+
+body.editing.adding-box .paper .box{pointer-events:none}
+.editor-add-guide{position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:20;background:var(--primary);color:white;font-size:12px;padding:5px 14px;border-radius:9999px;pointer-events:none}
+.editor-add-cross{position:fixed;inset:56px 0 0;z-index:19;pointer-events:none;overflow:hidden}
+.editor-add-cross i:first-child{position:absolute;left:var(--cross-x,-100px);top:0;bottom:0;border-left:1px dashed #0054fdb3}
+.editor-add-cross i:last-child{position:absolute;top:var(--cross-y,-100px);left:0;right:0;border-top:1px dashed #0054fdb3}

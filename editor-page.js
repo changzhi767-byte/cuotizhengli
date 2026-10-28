@@ -58,3 +58,11 @@ viewport.addEventListener('scroll',positionEditorTools,{passive:true});
 window.addEventListener('resize',positionEditorTools);
 new ResizeObserver(positionEditorTools).observe(viewport);
 positionEditorTools();
+
+// The reference editor uses a visible crosshair and persistent add-mode hint.
+const addGuide=document.createElement('div');addGuide.className='editor-add-guide';addGuide.hidden=true;addGuide.textContent='在试卷上拖动添加题框 · 再次点击「添加框」或 Esc 退出';document.querySelector('.canvas-shell').append(addGuide);
+const addCross=document.createElement('div');addCross.className='editor-add-cross';addCross.hidden=true;addCross.innerHTML='<i></i><i></i>';viewport.append(addCross);
+viewport.addEventListener('pointermove',e=>{const active=tool==='edit'&&addBoxMode&&!spaceHeld;addCross.hidden=!active;if(active){const r=viewport.getBoundingClientRect();addCross.style.setProperty('--cross-x',(e.clientX-r.left)+'px');addCross.style.setProperty('--cross-y',(e.clientY-r.top)+'px')}});
+viewport.addEventListener('pointerleave',()=>{addCross.hidden=true});
+const syncEditorBeforeAddGuide=syncEditorPage;
+syncEditorPage=function(){syncEditorBeforeAddGuide();addGuide.hidden=tool!=='edit'||!addBoxMode;if(addGuide.hidden)addCross.hidden=true};

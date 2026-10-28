@@ -161,3 +161,10 @@ body.editing .box.edit-selected .handle[data-h=se]{right:-8.5px;bottom:-8.5px}
 .batch-selection .handle[data-h=ne]{right:-8.5px;top:-8px}
 .batch-selection .handle[data-h=sw]{left:-8px;bottom:-8.5px}
 .batch-selection .handle[data-h=se]{right:-8.5px;bottom:-8.5px}
+
+/* Anchor handle centers to the 2px border centerline; reset opposite edges. */
+.batch-selection .handle,body.editing .box.edit-selected .handle{box-sizing:border-box;transform:translate(-50%,-50%);right:auto;bottom:auto}
+.batch-selection .handle[data-h=nw],body.editing .box.edit-selected .handle[data-h=nw]{left:-1px;top:-1px;right:auto;bottom:auto}
+.batch-selection .handle[data-h=ne],body.editing .box.edit-selected .handle[data-h=ne]{left:calc(100% + 1px);top:-1px;right:auto;bottom:auto}
+.batch-selection .handle[data-h=sw],body.editing .box.edit-selected .handle[data-h=sw]{left:-1px;top:calc(100% + 1px);right:auto;bottom:auto}
+.batch-selection .handle[data-h=se],body.editing .box.edit-selected .handle[data-h=se]{left:calc(100% + 1px);top:calc(100% + 1px);right:auto;bottom:auto}

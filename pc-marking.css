@@ -179,3 +179,6 @@ body.editing .box.edit-selected .handle[data-h=se]{right:-8.5px;bottom:-8.5px}
 
 /* Figma 10602:66354: edit-mode default includes a 4% primary fill. */
 body.editing .paper .box:not(.edit-selected){border-color:var(--primary);background:rgba(0,84,253,.04)}
+
+/* Reference /exam/review .qbox:hover: solid border, inset and outer glow, no fill. */
+.paper .box.is-hovered,body.editing .paper .box:hover,body.editing .paper .box:not(.edit-selected):hover{border-color:var(--primary);border-style:solid;background:transparent;box-shadow:inset 0 0 0 2px var(--primary),0 3px 14px color-mix(in srgb,var(--primary) 45%,transparent);z-index:6}

@@ -30,10 +30,10 @@ tools.setAttribute('aria-label','编辑题框');
 const menuTitle=document.createElement('div');menuTitle.className='frame-menu-title';menuTitle.textContent='编辑题框';
 const menuDivider=document.createElement('img');menuDivider.className='frame-menu-divider';menuDivider.src='editor-menu-divider.svg';menuDivider.alt='';
 tools.prepend(menuTitle,menuDivider);
-for(const [action,label,icon] of [['merge','合并题目','editor-menu-merge.svg'],['delete','删除框','editor-menu-trash.svg']]){
+for(const [action,label,icon] of [['merge','合并题框','editor-menu-merge.svg'],['split','拆分题框','editor-menu-merge.svg'],['delete','删除题框','editor-menu-trash.svg']]){
  const button=tools.querySelector('[data-action='+action+']');button.innerHTML='<img src="'+icon+'" alt=""><span>'+label+'</span>';
 }
-tools.querySelector('[data-action=split]').textContent='拆开题目';
+
 function positionEditorTools(){
  if(tool!=='edit'||!editIds.size){tools.hidden=true;return}
  const nodes=[...stage.querySelectorAll('.box[data-id]')].filter(n=>editIds.has(+n.dataset.id));
@@ -41,7 +41,12 @@ function positionEditorTools(){
  if(!rects.length){tools.hidden=true;return}
  const left=Math.min(...rects.map(r=>r.left)),right=Math.max(...rects.map(r=>r.right)),top=Math.min(...rects.map(r=>r.top)),bottom=Math.max(...rects.map(r=>r.bottom));
  if(right<view.left||left>view.right||bottom<view.top||top>view.bottom){tools.hidden=true;return}
- tools.querySelector('[data-action=split]').hidden=tools.querySelector('[data-action=split]').disabled;
+ const selectedBoxes=boxes.filter(b=>editIds.has(b.id)),selectedGroups=new Set(selectedBoxes.map(group));
+ const groupCount=boxes.filter(b=>selectedGroups.has(group(b))).length;
+ for(const [action,verb,count] of [['merge','合并',groupCount],['split','拆分',groupCount],['delete','删除',selectedBoxes.length]]){
+  const button=tools.querySelector('[data-action='+action+']');button.hidden=false;
+  button.querySelector('span').textContent=verb+' '+count+' 个题框';
+ }
  tools.hidden=false;
  const w=tools.offsetWidth,h=tools.offsetHeight;
  const x=Math.max(view.left+8,Math.min(right-w,view.right-w-8));

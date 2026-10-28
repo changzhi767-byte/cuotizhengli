@@ -194,3 +194,9 @@ body.editing .frame-editor-menu button[data-action]:hover:not(:disabled){backgro
 body.editing .frame-editor-menu button[data-action=delete]:hover{background:#fff0ee}
 body.editing .frame-editor-menu button[data-action]:disabled{opacity:.35;cursor:default}
 body.editing .frame-editor-menu button[data-action=undo],body.editing .frame-editor-menu button[data-action=redo],body.editing .frame-editor-menu button[data-action=cancel],body.editing .frame-editor-menu button[data-action=done]{display:none}
+
+/* Menu rows must not inherit centered capsule-button alignment. */
+body.editing .editor-tools.frame-editor-menu{width:184px}
+body.editing .frame-editor-menu button[data-action]{justify-content:flex-start;flex:none;width:100%;margin:0;box-sizing:border-box;transition:none}
+.frame-editor-menu button[data-action] span{flex:1;min-width:0;text-align:left}
+.frame-menu-divider{align-self:flex-start}

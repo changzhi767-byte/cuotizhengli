@@ -190,7 +190,7 @@ body.editing .editor-tools.frame-editor-menu{position:fixed;z-index:45;display:f
 body.editing .frame-editor-menu button[data-action]{height:40px;min-height:40px;display:flex;align-items:center;gap:8px;padding:0 8px;border:0;border-radius:4px;background:transparent;box-shadow:none;color:#1c1f2e;font:inherit;font-size:14px;line-height:19.6px;text-align:left;white-space:nowrap}
 .frame-editor-menu button img{display:block;flex:none}
 body.editing .frame-editor-menu button[data-action=delete]{color:#cb2634}
-body.editing .frame-editor-menu button[data-action]:hover:not(:disabled){background:#f2f6ff}
+body.editing .frame-editor-menu button[data-action]:not([data-action=delete]):hover:not(:disabled){background:#f7f9fc}
 body.editing .frame-editor-menu button[data-action=delete]:hover{background:#fff0ee}
 body.editing .frame-editor-menu button[data-action]:disabled{opacity:.35;cursor:default}
 body.editing .frame-editor-menu button[data-action=undo],body.editing .frame-editor-menu button[data-action=redo],body.editing .frame-editor-menu button[data-action=cancel],body.editing .frame-editor-menu button[data-action=done]{display:none}

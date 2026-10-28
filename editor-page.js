@@ -28,7 +28,7 @@ document.body.append(tools);
 tools.classList.add('frame-editor-menu');
 tools.setAttribute('aria-label','编辑题框');
 const menuTitle=document.createElement('div');menuTitle.className='frame-menu-title';menuTitle.textContent='编辑题框';
-const menuDivider=document.createElement('img');menuDivider.className='frame-menu-divider';menuDivider.src='editor-menu-divider.svg';menuDivider.alt='';
+const menuDivider=document.createElement('img');menuDivider.className='frame-menu-divider';menuDivider.src='editor-menu-divider.svg?v=20261028-1180';menuDivider.alt='';
 tools.prepend(menuTitle,menuDivider);
 const menuSlot=document.createElement("div");menuSlot.className="frame-menu-slot";tools.append(menuSlot);[...tools.querySelectorAll("button[data-action]")].forEach(button=>menuSlot.append(button));
 const frameActionIcons={"merge": "<svg class=\"frame-action-icon\" aria-hidden=\"true\" viewBox=\"0 0 24 24\"><path d=\"M8 6h11M8 12h11M8 18h11M4 6h.01M4 12h.01M4 18h.01\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>", "split": "<svg class=\"frame-action-icon\" aria-hidden=\"true\" viewBox=\"0 0 24 24\"><path d=\"M8 3H5a2 2 0 0 0-2 2v3m0 8v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3m0-8V5a2 2 0 0 0-2-2h-3\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>", "delete": "<svg class=\"frame-action-icon\" aria-hidden=\"true\" viewBox=\"0 0 24 24\"><path d=\"M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m2 0v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>"};
@@ -47,7 +47,7 @@ function positionEditorTools(){
  const canSplit=sameMergedGroup||(selectedBoxes.length===1&&groupCount>1);
  for(const [action,verb,count] of [['merge','合并',groupCount],['split','拆分',groupCount],['delete','删除',selectedBoxes.length]]){
   const button=tools.querySelector('[data-action='+action+']');button.hidden=action==='merge'?!canMerge:action==='split'?!canSplit:false;
-  button.querySelector('span').textContent=verb+' '+count+' 个题框';
+  button.querySelector('span').textContent=action==='delete'?'删除 '+count+' 个题框':verb+'题框';
  }
  tools.hidden=false;
  const w=tools.offsetWidth,h=tools.offsetHeight;

@@ -224,3 +224,10 @@ body.editing .editor-tools.frame-editor-menu{width:168px;padding:2px 4px}
 .frame-menu-divider{align-self:flex-start;flex:none}
 body.editing .frame-menu-slot button[data-action]{padding:0 8px;gap:8px}
 .frame-menu-slot button[data-action] span{overflow:hidden;text-overflow:ellipsis}
+
+/* Latest Figma10610:66496: 36px rows and danger hover fill. */
+body.editing .editor-tools.frame-editor-menu{padding:2px 8px}
+.frame-menu-title{padding:0 8px}
+.frame-menu-slot{padding:4px 0}
+body.editing .frame-menu-slot button[data-action]{height:36px;min-height:36px;border-radius:10px}
+body.editing .frame-menu-slot button[data-action=delete]:hover:not(:disabled){background:#ffece8;color:#cb2634}

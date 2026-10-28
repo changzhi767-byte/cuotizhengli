@@ -153,3 +153,11 @@ body.editing .box.edit-selected .handle[data-h=nw]{left:-8px;top:-8px}
 body.editing .box.edit-selected .handle[data-h=ne]{right:-8.5px;top:-8px}
 body.editing .box.edit-selected .handle[data-h=sw]{left:-8px;bottom:-8.5px}
 body.editing .box.edit-selected .handle[data-h=se]{right:-8.5px;bottom:-8.5px}
+
+/* Batch selection uses the same selected component as question frames. */
+.batch-selection{border:2px solid var(--primary);border-radius:2px;background:transparent;box-shadow:0 0 0 3px rgba(0,0,0,.04)}
+.batch-selection .handle{width:12.96px;height:12.96px;border:2px solid #1c1f2e;border-radius:9999px;background:#fff;box-shadow:0 2px 8px #0003}
+.batch-selection .handle[data-h=nw]{left:-8px;top:-8px}
+.batch-selection .handle[data-h=ne]{right:-8.5px;top:-8px}
+.batch-selection .handle[data-h=sw]{left:-8px;bottom:-8.5px}
+.batch-selection .handle[data-h=se]{right:-8.5px;bottom:-8.5px}

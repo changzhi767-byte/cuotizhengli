@@ -216,3 +216,11 @@ body.editing.adding-box .paper .box{pointer-events:none}
 .editor-add-cross i:last-child{position:absolute;top:var(--cross-y,-100px);left:0;right:0;border-top:1px dashed #0054fdb3}
 
 .frame-editor-menu .frame-action-icon{display:block;flex:none;width:16px;height:16px;fill:currentColor}
+
+/* Latest Figma10610:66496 spacing: outer4, slot8/4, row8. */
+body.editing .editor-tools.frame-editor-menu{width:168px;padding:2px 4px}
+.frame-menu-title{padding:0 16px}
+.frame-menu-slot{display:flex;flex-direction:column;align-items:stretch;padding:4px 8px;gap:0;box-sizing:border-box;width:100%}
+.frame-menu-divider{align-self:flex-start;flex:none}
+body.editing .frame-menu-slot button[data-action]{padding:0 8px;gap:8px}
+.frame-menu-slot button[data-action] span{overflow:hidden;text-overflow:ellipsis}

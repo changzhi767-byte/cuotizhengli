@@ -176,3 +176,6 @@ body.editing .box.edit-selected .handle[data-h=se]{right:-8.5px;bottom:-8.5px}
 .cascader-column+.cascader-column{border-left:1px solid #f0f1f5}
 .cascader-column button{display:flex;align-items:center;justify-content:space-between;width:100%;height:32px;padding:0 12px;border:0;border-radius:4px;background:transparent;color:var(--t1);text-align:left;font:inherit;font-size:14px;cursor:pointer}
 .cascader-column button:hover{background:#f2f6ff}.cascader-column button[aria-pressed=true]{background:#f2f6ff;color:var(--primary)}
+
+/* Figma 10602:66354: edit-mode default includes a 4% primary fill. */
+body.editing .paper .box:not(.edit-selected){border-color:var(--primary);background:rgba(0,84,253,.04)}

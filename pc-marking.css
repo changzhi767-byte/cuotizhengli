@@ -200,3 +200,9 @@ body.editing .editor-tools.frame-editor-menu{width:184px}
 body.editing .frame-editor-menu button[data-action]{justify-content:flex-start;flex:none;width:100%;margin:0;box-sizing:border-box;transition:none}
 .frame-editor-menu button[data-action] span{flex:1;min-width:0;text-align:left}
 .frame-menu-divider{align-self:flex-start}
+
+/* Marking-mode default frames are black; only merged groups carry tags. */
+body.marking .paper .box:not(.selected):not(.owner):not(.is-hovered){border:1px dashed #1c1f2e;background:transparent;box-shadow:none}
+.paper .box .same-question-tag{left:-1px;top:-15px;width:auto;white-space:nowrap;border-radius:3px 3px 0 0}
+.paper .box.selected .same-question-tag,.paper .box.owner .same-question-tag,body.editing .box.edit-selected .same-question-tag{left:-2px;top:-16px}
+body.marking .thumbnail-box::before{display:none}

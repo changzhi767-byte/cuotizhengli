@@ -135,3 +135,9 @@ body{height:100dvh}.workspace{width:100%;max-width:100%;min-width:0;height:calc(
 #thumbnailList::-webkit-scrollbar-track{background:transparent}
 #thumbnailList::-webkit-scrollbar-thumb{background:transparent;border-radius:3px}
 #thumbnailList.is-scrolling::-webkit-scrollbar-thumb{background:rgba(113,119,143,.55)}
+
+/* Question frames follow the shared project primary token. */
+.paper .box,body.editing .box{border-color:var(--primary)}
+.paper .box.selected,.paper .box.owner,body.editing .box.edit-selected{border-color:var(--primary)}
+.paper .box span,.paper .box.selected span,.paper .box.owner span,.paper .box.edit-selected span{background:var(--primary)}
+.paper .box .handle{border-color:var(--primary)}

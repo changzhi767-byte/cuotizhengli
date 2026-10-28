@@ -17,7 +17,7 @@ function remember(s=state()){if(undo.at(-1)!==s)undo.push(s);if(undo.length>80)u
 function history(back){const from=back?undo:redo,to=back?redo:undo;if(!from.length)return;to.push(state());restore(from.pop())}
 function assign(mark){const id=BanxueMarkGeometry.assignment(mark,pageMeta,boxes);return boxes.find(b=>String(b.id)===id)||null}
 function assignments(){return new Map(marks.map(m=>[m.id,assign(m)]))}
-function handleMarkup(){return ['nw','n','ne','e','se','s','sw','w'].map(h=>`<i class="handle" data-h="${h}"></i>`).join('')}
+function handleMarkup(){return ['nw','ne','se','sw'].map(h=>`<i class="handle" data-h="${h}"></i>`).join('')}
 function markArt(){return '<span class="mark-art"><span class="mark-ink"><img src="error-ink.svg" alt="" draggable="false"></span></span>'}
 function markMarkup(m,owner,ownerGroup){const active=m.id===activeMark||batchMarkIds.has(m.id);return `<div role="button" tabindex="${tool==='mark'?0:-1}" aria-label="错误标记 ${m.id}" title="点击选中，拖动移动" class="error-mark ${active?'active':''} ${tool!=='mark'?'locked':''}" data-mark="${m.id}" style="left:${m.x*100}%;top:${m.y*100}%;width:${m.size*100}%;--mark-art-scale:${pageNodes()[m.page].clientWidth*m.size/500}">${markArt()}${active&&tool==='mark'&&batchMarkIds.size<2?'<button class="mark-delete" data-delete-mark="'+m.id+'" aria-label="删除标记"><img src="clear-trash.svg" alt=""></button><i class="handle" data-h="nw"></i><i class="handle" data-h="ne"></i><i class="handle" data-h="sw"></i><i class="handle" data-h="se"></i>':''}</div>`}
 draw=function(){const a=assignments();selected=new Set([...a.values()].filter(Boolean).map(group));const owner=activeMark&&a.get(activeMark),ownerGroup=owner?group(owner):focusGroup;
@@ -126,3 +126,15 @@ thumbnailScroller.addEventListener('scroll',()=>{
  clearTimeout(thumbnailScrollbarTimer);
  thumbnailScrollbarTimer=setTimeout(()=>thumbnailScroller.classList.remove('is-scrolling'),800);
 },{passive:true});
+
+// Geometric hover keeps marking-mode boxes transparent to pointer actions.
+function clearFrameHover(){stage.querySelectorAll('.box.is-hovered').forEach(n=>n.classList.remove('is-hovered'))}
+stage.addEventListener('pointermove',e=>{
+ clearFrameHover();
+ if(gesture||spaceHeld||tool!=='mark')return;
+ const pageNode=e.target.closest('.paper');if(!pageNode)return;
+ const page=+pageNode.dataset.page,p=sourcePoint(e,page);
+ const hit=boxes.find(b=>(b.page||0)===page&&p.x>=b.x&&p.x<=b.x+b.w&&p.y>=b.y&&p.y<=b.y+b.h);
+ if(hit)pageNode.querySelector('.box[data-id="'+hit.id+'"]')?.classList.add('is-hovered');
+},{passive:true});
+stage.addEventListener('pointerleave',clearFrameHover);

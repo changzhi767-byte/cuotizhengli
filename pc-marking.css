@@ -141,3 +141,15 @@ body{height:100dvh}.workspace{width:100%;max-width:100%;min-width:0;height:calc(
 .paper .box.selected,.paper .box.owner,body.editing .box.edit-selected{border-color:var(--primary)}
 .paper .box span,.paper .box.selected span,.paper .box.owner span,.paper .box.edit-selected span{background:var(--primary)}
 .paper .box .handle{border-color:var(--primary)}
+
+/* Figma component 10602:66325: default / hover / selected / editing. */
+.paper .box,body.editing .box{border:1px dashed #3d7bff;border-radius:2px;background:transparent;box-shadow:none}
+.paper .box span,body.editing .box span{background:#3d7bff;left:-13.5px;top:-.07px}
+.paper .box.is-hovered,body.editing .box:hover{border-color:var(--primary);background:rgba(0,84,253,.04)}
+.paper .box.selected,.paper .box.owner,body.editing .box.edit-selected{border:2px solid var(--primary);background:transparent;box-shadow:0 0 0 3px rgba(0,0,0,.04)}
+.paper .box.selected span,.paper .box.owner span,body.editing .box.edit-selected span{background:var(--primary);left:-14.5px;top:-.57px}
+body.editing .box.edit-selected .handle{width:12.96px;height:12.96px;border:2px solid #1c1f2e;border-radius:9999px;background:#fff;box-shadow:0 2px 8px #0003}
+body.editing .box.edit-selected .handle[data-h=nw]{left:-8px;top:-8px}
+body.editing .box.edit-selected .handle[data-h=ne]{right:-8.5px;top:-8px}
+body.editing .box.edit-selected .handle[data-h=sw]{left:-8px;bottom:-8.5px}
+body.editing .box.edit-selected .handle[data-h=se]{right:-8.5px;bottom:-8.5px}

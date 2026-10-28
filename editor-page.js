@@ -16,8 +16,8 @@ document.addEventListener('pointerdown',e=>{if(!fieldCascader.hidden&&!fieldCasc
 window.addEventListener('resize',()=>closeFieldCascader());
 fieldCascader.addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Escape'){e.preventDefault();closeFieldCascader(true)}if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();const items=[...e.target.closest('.cascader-column').querySelectorAll('button')],i=items.indexOf(e.target);items[(i+(e.key==='ArrowDown'?1:items.length-1))%items.length].focus()}if(e.key==='ArrowRight'&&e.target.dataset.grade){e.preventDefault();pendingGrade=e.target.dataset.grade;renderFieldCascader();fieldCascader.querySelector('[data-subject]').focus()}if(e.key==='ArrowLeft'&&e.target.dataset.subject){e.preventDefault();fieldCascader.querySelector('[data-grade="'+pendingGrade+'"]').focus()}});
 function syncEditorPage(){const on=tool==='edit';if(!on)closeFieldCascader();gradeSubject.hidden=!on;editorActions.hidden=!on;gradeSubject.querySelector('span').textContent=editorFields.grade+'/'+editorFields.subject;tools.hidden=!on||!editIds.size;positionEditorTools();document.body.classList.toggle('adding-box',on&&addBoxMode);editorActions.querySelector('.editor-add').setAttribute('aria-pressed',String(addBoxMode));$('back').setAttribute('aria-label',on?'取消编辑并返回':'返回适应整页')}
-editorActions.querySelector('.editor-add').onclick=()=>{addBoxMode=!addBoxMode;editIds.clear();syncEditorPage();draw();if(addBoxMode)notify('在原图上拖动，添加一个题框')};editorActions.querySelector('.editor-confirm').onclick=()=>finishEdit(true);
-const previousSetTool=setTool;setTool=function(next){const oldAnchor=anchor();addBoxMode=false;previousSetTool(next);syncEditorPage();render(oldAnchor)};
+editorActions.querySelector('.editor-add').onclick=()=>{addBoxMode=!addBoxMode;pendingAddFrame=null;draft=null;editIds.clear();syncEditorPage();draw()};editorActions.querySelector('.editor-confirm').onclick=()=>finishEdit(true);
+const previousSetTool=setTool;setTool=function(next){const oldAnchor=anchor();addBoxMode=false;pendingAddFrame=null;previousSetTool(next);syncEditorPage();render(oldAnchor)};
 const previousDraw=draw;draw=function(){previousDraw();syncEditorPage()};
 $('back').onclick=()=>{if(tool==='edit')finishEdit(false);else{fit=true;render()}};
 
@@ -61,10 +61,40 @@ window.addEventListener('resize',positionEditorTools);
 new ResizeObserver(positionEditorTools).observe(viewport);
 positionEditorTools();
 
-// The reference editor uses a visible crosshair and persistent add-mode hint.
-const addGuide=document.createElement('div');addGuide.className='editor-add-guide';addGuide.hidden=true;addGuide.textContent='在试卷上拖动添加题框 · 再次点击「添加框」或 Esc 退出';document.querySelector('.canvas-shell').append(addGuide);
-const addCross=document.createElement('div');addCross.className='editor-add-cross';addCross.hidden=true;addCross.innerHTML='<i></i><i></i>';viewport.append(addCross);
-viewport.addEventListener('pointermove',e=>{const active=tool==='edit'&&addBoxMode&&!spaceHeld;addCross.hidden=!active;if(active){const r=viewport.getBoundingClientRect();addCross.style.setProperty('--cross-x',(e.clientX-r.left)+'px');addCross.style.setProperty('--cross-y',(e.clientY-r.top)+'px')}});
-viewport.addEventListener('pointerleave',()=>{addCross.hidden=true});
-const syncEditorBeforeAddGuide=syncEditorPage;
-syncEditorPage=function(){syncEditorBeforeAddGuide();addGuide.hidden=tool!=='edit'||!addBoxMode;if(addGuide.hidden)addCross.hidden=true};
+
+// Production add-frame flow: draw a local candidate, adjust, cancel or confirm.
+function confirmAddFrame(){
+ if(!pendingAddFrame)return;
+ if(pendingAddFrame.w<30||pendingAddFrame.h<30){notify('题框太小，请重新框选');pendingAddFrame=null;addBoxMode=false;draw();return}
+ remember();boxes.push({...pendingAddFrame,id:++serial});pendingAddFrame=null;addBoxMode=false;editIds.clear();draw();
+}
+function renderAddFrame(){
+ stage.querySelectorAll('.add-frame-layer').forEach(n=>n.remove());
+ const active=tool==='edit'&&addBoxMode;
+ const button=editorActions.querySelector('.editor-add');button.innerHTML='<img src="edit-add.svg" alt="">'+(active?'退出添加':'添加题框');
+ editorActions.querySelector('.editor-confirm').disabled=active;
+ if(!active){pendingAddFrame=null;return}
+ const candidate=draft||pendingAddFrame;
+ pageNodes().forEach((node,page)=>{
+  const m=pageMeta[page];if(!m)return;
+  const layer=document.createElement('div');layer.className='add-frame-layer';
+  const local=candidate&&candidate.page===page;
+  if(!local)layer.innerHTML='<div class="add-frame-mask add-frame-mask-full"></div>';
+  if(!candidate)layer.innerHTML+='<div class="add-frame-placeholder"><i></i><span>框选添加题框</span></div>';
+  if(local){
+   const x=candidate.x/m.w*100,y=candidate.y/m.h*100,w=candidate.w/m.w*100,h=candidate.h/m.h*100;
+   layer.innerHTML='<div class="add-frame-mask" style="left:0;top:0;width:100%;height:'+y+'%"></div><div class="add-frame-mask" style="left:0;top:'+(y+h)+'%;width:100%;height:'+(100-y-h)+'%"></div><div class="add-frame-mask" style="left:0;top:'+y+'%;width:'+x+'%;height:'+h+'%"></div><div class="add-frame-mask" style="left:'+(x+w)+'%;top:'+y+'%;width:'+(100-x-w)+'%;height:'+h+'%"></div>';
+   const frame=document.createElement('div');frame.className='add-frame-draft';frame.setAttribute('aria-label','待确认的新题框');Object.assign(frame.style,{left:x+'%',top:y+'%',width:w+'%',height:h+'%'});
+   if(!gesture||gesture.kind!=='new-box'){
+    frame.innerHTML=['nw','n','ne','e','se','s','sw','w'].map(h=>'<i class="add-frame-handle" data-add-h="'+h+'"></i>').join('')+'<div class="add-frame-actions"><button type="button" data-add-action="cancel" aria-label="取消本次框选"><img src="add-draft-cancel.svg" alt=""></button><button type="button" data-add-action="confirm" aria-label="确认添加题框"><img src="add-draft-confirm.svg" alt=""></button></div>';
+    const r=node.getBoundingClientRect(),right=r.left+(x+w)/100*r.width;
+    if(right+80>viewport.getBoundingClientRect().right)frame.classList.add('actions-inside');
+   }
+   layer.append(frame);
+  }
+  node.append(layer);
+ });
+}
+const syncEditorBeforeAddDraft=syncEditorPage;
+syncEditorPage=function(){syncEditorBeforeAddDraft();renderAddFrame()};
+viewport.addEventListener('scroll',()=>{if(tool==='edit'&&addBoxMode)renderAddFrame()},{passive:true});

@@ -14,7 +14,7 @@
 .panel .item.active,.panel .item:hover{border:0;box-shadow:none}
 .panel .item:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
 .card-heading{height:30px;display:flex;align-items:center;justify-content:space-between;flex:none}
-.card-number{display:flex;align-items:center;justify-content:center;width:20px;height:14px;border:1px solid #f7f9fc;border-radius:9999px;background:rgba(0,0,0,.4);color:#fff;font-size:10px;line-height:14px;font-weight:400}
+
 .panel .item .remove-card{position:relative;inset:auto;display:flex;align-items:center;justify-content:center;width:16px;height:16px;padding:0;border:0;background:transparent;border-radius:0;cursor:pointer}
 .remove-card::after{content:'';position:absolute;inset:-4px}
 .remove-card img{display:block;width:16px;height:16px}
@@ -206,3 +206,5 @@ body.marking .paper .box:not(.selected):not(.owner):not(.is-hovered){border:1px 
 .paper .box .same-question-tag{left:-1px;top:-15px;width:auto;white-space:nowrap;border-radius:3px 3px 0 0}
 .paper .box.selected .same-question-tag,.paper .box.owner .same-question-tag,body.editing .box.edit-selected .same-question-tag{left:-2px;top:-16px}
 body.marking .thumbnail-box::before{display:none}
+
+.panel .card-heading{justify-content:flex-end}

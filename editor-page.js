@@ -15,10 +15,41 @@ fieldCascader.onclick=e=>{const g=e.target.closest('[data-grade]'),v=e.target.cl
 document.addEventListener('pointerdown',e=>{if(!fieldCascader.hidden&&!fieldCascader.contains(e.target)&&!gradeSubject.contains(e.target))closeFieldCascader()});
 window.addEventListener('resize',()=>closeFieldCascader());
 fieldCascader.addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Escape'){e.preventDefault();closeFieldCascader(true)}if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();const items=[...e.target.closest('.cascader-column').querySelectorAll('button')],i=items.indexOf(e.target);items[(i+(e.key==='ArrowDown'?1:items.length-1))%items.length].focus()}if(e.key==='ArrowRight'&&e.target.dataset.grade){e.preventDefault();pendingGrade=e.target.dataset.grade;renderFieldCascader();fieldCascader.querySelector('[data-subject]').focus()}if(e.key==='ArrowLeft'&&e.target.dataset.subject){e.preventDefault();fieldCascader.querySelector('[data-grade="'+pendingGrade+'"]').focus()}});
-function syncEditorPage(){const on=tool==='edit';if(!on)closeFieldCascader();gradeSubject.hidden=!on;editorActions.hidden=!on;gradeSubject.querySelector('span').textContent=editorFields.grade+'/'+editorFields.subject;tools.hidden=!on||!editIds.size;document.body.classList.toggle('adding-box',on&&addBoxMode);editorActions.querySelector('.editor-add').setAttribute('aria-pressed',String(addBoxMode));$('back').setAttribute('aria-label',on?'取消编辑并返回':'返回适应整页')}
+function syncEditorPage(){const on=tool==='edit';if(!on)closeFieldCascader();gradeSubject.hidden=!on;editorActions.hidden=!on;gradeSubject.querySelector('span').textContent=editorFields.grade+'/'+editorFields.subject;tools.hidden=!on||!editIds.size;positionEditorTools();document.body.classList.toggle('adding-box',on&&addBoxMode);editorActions.querySelector('.editor-add').setAttribute('aria-pressed',String(addBoxMode));$('back').setAttribute('aria-label',on?'取消编辑并返回':'返回适应整页')}
 editorActions.querySelector('.editor-add').onclick=()=>{addBoxMode=!addBoxMode;editIds.clear();syncEditorPage();draw();if(addBoxMode)notify('在原图上拖动，添加一个题框')};editorActions.querySelector('.editor-confirm').onclick=()=>finishEdit(true);
 const previousSetTool=setTool;setTool=function(next){const oldAnchor=anchor();addBoxMode=false;previousSetTool(next);syncEditorPage();render(oldAnchor)};
 const previousDraw=draw;draw=function(){previousDraw();syncEditorPage()};
 $('back').onclick=()=>{if(tool==='edit')finishEdit(false);else{fit=true;render()}};
 
 syncEditorPage();
+
+// Follow the visible selection bounds without scaling menu typography or icons.
+document.body.append(tools);
+tools.classList.add('frame-editor-menu');
+tools.setAttribute('aria-label','编辑题框');
+const menuTitle=document.createElement('div');menuTitle.className='frame-menu-title';menuTitle.textContent='编辑题框';
+const menuDivider=document.createElement('img');menuDivider.className='frame-menu-divider';menuDivider.src='editor-menu-divider.svg';menuDivider.alt='';
+tools.prepend(menuTitle,menuDivider);
+for(const [action,label,icon] of [['merge','合并题目','editor-menu-merge.svg'],['delete','删除框','editor-menu-trash.svg']]){
+ const button=tools.querySelector('[data-action='+action+']');button.innerHTML='<img src="'+icon+'" alt=""><span>'+label+'</span>';
+}
+tools.querySelector('[data-action=split]').textContent='拆开题目';
+function positionEditorTools(){
+ if(tool!=='edit'||!editIds.size){tools.hidden=true;return}
+ const nodes=[...stage.querySelectorAll('.box[data-id]')].filter(n=>editIds.has(+n.dataset.id));
+ const view=viewport.getBoundingClientRect(),rects=nodes.map(n=>n.getBoundingClientRect());
+ if(!rects.length){tools.hidden=true;return}
+ const left=Math.min(...rects.map(r=>r.left)),right=Math.max(...rects.map(r=>r.right)),top=Math.min(...rects.map(r=>r.top)),bottom=Math.max(...rects.map(r=>r.bottom));
+ if(right<view.left||left>view.right||bottom<view.top||top>view.bottom){tools.hidden=true;return}
+ tools.querySelector('[data-action=split]').hidden=tools.querySelector('[data-action=split]').disabled;
+ tools.hidden=false;
+ const w=tools.offsetWidth,h=tools.offsetHeight;
+ const x=Math.max(view.left+8,Math.min(right-w,view.right-w-8));
+ let y=bottom+8;if(y+h>view.bottom-8)y=top-h-8;
+ y=Math.max(view.top+8,Math.min(y,view.bottom-h-8));
+ Object.assign(tools.style,{left:x+'px',top:y+'px'});
+}
+viewport.addEventListener('scroll',positionEditorTools,{passive:true});
+window.addEventListener('resize',positionEditorTools);
+new ResizeObserver(positionEditorTools).observe(viewport);
+positionEditorTools();

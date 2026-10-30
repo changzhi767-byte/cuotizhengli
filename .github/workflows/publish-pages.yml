@@ -1,0 +1,49 @@
+name: Publish complete previews
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Import reviewed coach runtime once
+        run: |
+          python3 - <<'PY'
+          import hashlib, io, pathlib, zipfile
+          root=pathlib.Path('.')
+          marker=root/'coach-mistake/.runtime-imported'
+          digest='c83ea248bd25e7973b18527387a7719e12b5481a804ac4a382efc5f55a662d82'
+          if marker.exists() and marker.read_text().strip()==digest:
+              raise SystemExit(0)
+          data=b''.join(p.read_bytes() for p in sorted(root.glob('coach-runtime.part*')))
+          assert hashlib.sha256(data).hexdigest()==digest, 'Runtime archive checksum mismatch'
+          with zipfile.ZipFile(io.BytesIO(data)) as archive:
+              for info in archive.infolist():
+                  path=pathlib.PurePosixPath(info.filename)
+                  assert path.parts[0]=='coach-mistake' and '..' not in path.parts and not path.is_absolute()
+              archive.extractall(root)
+          marker.write_text(digest+'\n')
+          PY
+      - uses: actions/configure-pages@v5
+      - name: Assemble existing and new public previews
+        run: |
+          mkdir -p "$RUNNER_TEMP/pages"
+          rsync -a --exclude='.git' --exclude='.github' --exclude='coach-runtime.part*' --exclude='runtime-sha256.txt' ./ "$RUNNER_TEMP/pages/"
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: ${{ runner.temp }}/pages
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

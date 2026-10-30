@@ -36,11 +36,26 @@ jobs:
               archive.extractall(root)
           marker.write_text(digest+'\n')
           PY
+      - name: Apply public demo login defaults
+        run: |
+          cp coach-login-prefill.js coach-mistake/login-prefill.js
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          base='/xiaowai/coach-mistake/'
+          for relative in ['index.html','coach/index.html']:
+              p=Path('coach-mistake')/relative
+              text=p.read_text().replace('content="20261030-1500"','content="20261030-1510"')
+              if relative=='coach/index.html':
+                  text=text.replace('</body>','<script src="'+base+'login-prefill.js?v=20261030-1510"></script></body>')
+              else:
+                  text=text.replace('const versionHistory = [',"const versionHistory = [\n        { v: '20261030-1510', log: '公开演示默认填入可编辑账号密码，不自动登录或勾选协议。' },")
+              p.write_text(text)
+          PYCODE
       - uses: actions/configure-pages@v5
       - name: Assemble existing and new public previews
         run: |
           mkdir -p "$RUNNER_TEMP/pages"
-          rsync -a --exclude='.git' --exclude='.github' --exclude='coach-runtime.part*' --exclude='runtime-sha256.txt' ./ "$RUNNER_TEMP/pages/"
+          rsync -a --exclude='.git' --exclude='.github' --exclude='coach-runtime.part*' --exclude='runtime-sha256.txt' --exclude='coach-login-prefill.js' ./ "$RUNNER_TEMP/pages/"
       - uses: actions/upload-pages-artifact@v4
         with:
           path: ${{ runner.temp }}/pages
